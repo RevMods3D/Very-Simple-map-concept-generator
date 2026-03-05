@@ -1,4 +1,6 @@
 using System.Windows.Forms;
+using Map_Creator;
+using System.Text.Json;
 
 namespace Map_Creator
 {
@@ -97,7 +99,7 @@ namespace Map_Creator
             {
                 for (int i = 0; i < amount; i++)
                 {
-                    bool UseCluster =  clusters.Count > 0 && rnd.NextDouble() < 0.5; // 70% chance to use a cluster
+                    bool UseCluster = clusters.Count > 0 && rnd.NextDouble() < 0.5; // 70% chance to use a cluster
 
                     int x, y;
 
@@ -115,7 +117,7 @@ namespace Map_Creator
                         y = rnd.Next(0, Draw.Height);
                     }
 
-                    
+
                     x = Math.Clamp(x, 0, Draw.Width);
                     y = Math.Clamp(y, 0, Draw.Height);
                     points.Add(new Point(x, y));
@@ -147,6 +149,66 @@ namespace Map_Creator
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (points.Count == 0 || clusters.Count == 0)
+            {
+                MessageBox.Show("No data to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                SaveFileDialog saveFileDialog = new();
+                {
+                    saveFileDialog.FileName = mapNameTextBox.Text + ".map";
+                    saveFileDialog.Filter = "Map Files (*.map)|*.map|All files (*.*)|*.*";
+                    saveFileDialog.Title = "Save Map Data";
+                }
+                ;
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    MapData mapData = new()
+                    {
+                        Name = mapNameTextBox.Text,
+                        Points = points,
+                        Clusters = clusters
+                    };
+                    string json = JsonSerializer.Serialize(mapData, new JsonSerializerOptions { WriteIndented = true });
+                    File.WriteAllText(saveFileDialog.FileName, json);
+                }
+            }
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Map Files (*.map)|*.map|All files (*.*)|*.*",
+                Title = "Open Map Data"
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string json = File.ReadAllText(openFileDialog.FileName);
+                    MapData mapData = JsonSerializer.Deserialize<MapData>(json)!;
+
+                    points.Clear();
+                    clusters.Clear();
+
+                    points.AddRange(mapData.Points);
+                    clusters.AddRange(mapData.Clusters);
+
+                    mapNameTextBox.Text = mapData.Name;
+                    Draw.Invalidate();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to load map data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

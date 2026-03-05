@@ -30,25 +30,28 @@
         {
             Draw = new Panel();
             panel2 = new Panel();
+            pictureBox1 = new PictureBox();
+            label1 = new Label();
+            mapNameTextBox = new Label();
             Minimize = new Label();
             ChangeSize = new Label();
             Close = new Label();
-            label1 = new Label();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             newToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
             saveToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem1 = new ToolStripMenuItem();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            TableLayoutPanel1 = new TableLayoutPanel();
             AmountSearch = new TextBox();
             Clear = new Button();
             Generate = new Button();
             Density = new TextBox();
             Multiplier = new TextBox();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             menuStrip1.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            TableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // Draw
@@ -67,19 +70,62 @@
             // panel2
             // 
             panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel2.Controls.Add(pictureBox1);
+            panel2.Controls.Add(label1);
+            panel2.Controls.Add(mapNameTextBox);
             panel2.Controls.Add(Minimize);
             panel2.Controls.Add(ChangeSize);
             panel2.Controls.Add(Close);
-            panel2.Controls.Add(label1);
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(0);
             panel2.Name = "panel2";
             panel2.Size = new Size(784, 30);
             panel2.TabIndex = 2;
             panel2.DoubleClick += ChangeSize_Click;
-            panel2.MouseDown += Panel2_MouseUp;
+            panel2.MouseDown += Panel2_MouseDown;
             panel2.MouseMove += Panel2_MouseMove;
             panel2.MouseUp += Panel2_MouseUp;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.ErrorImage = null;
+            pictureBox1.Image = Properties.Resources.Map_Creator;
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Margin = new Padding(0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 30);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 1;
+            pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            label1.AccessibleRole = AccessibleRole.TitleBar;
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            label1.BackColor = Color.FromArgb(32, 32, 32);
+            label1.Location = new Point(30, 0);
+            label1.Margin = new Padding(0);
+            label1.Name = "label1";
+            label1.Size = new Size(73, 30);
+            label1.TabIndex = 0;
+            label1.Text = "Map Creator";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // mapNameTextBox
+            // 
+            mapNameTextBox.AccessibleRole = AccessibleRole.TitleBar;
+            mapNameTextBox.AutoEllipsis = true;
+            mapNameTextBox.Font = new Font("Segoe UI", 20F);
+            mapNameTextBox.Location = new Point(103, 0);
+            mapNameTextBox.Margin = new Padding(0);
+            mapNameTextBox.Name = "mapNameTextBox";
+            mapNameTextBox.Size = new Size(591, 30);
+            mapNameTextBox.TabIndex = 4;
+            mapNameTextBox.TextAlign = ContentAlignment.MiddleCenter;
+            mapNameTextBox.MouseDown += Panel2_MouseDown;
+            mapNameTextBox.MouseMove += Panel2_MouseMove;
+            mapNameTextBox.MouseUp += Panel2_MouseUp;
             // 
             // Minimize
             // 
@@ -120,19 +166,6 @@
             Close.TextAlign = ContentAlignment.MiddleCenter;
             Close.Click += ExitToolStripMenuItem1_Click;
             // 
-            // label1
-            // 
-            label1.AccessibleRole = AccessibleRole.TitleBar;
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            label1.BackColor = Color.FromArgb(32, 32, 32);
-            label1.Location = new Point(30, 0);
-            label1.Margin = new Padding(0);
-            label1.Name = "label1";
-            label1.Size = new Size(73, 30);
-            label1.TabIndex = 0;
-            label1.Text = "Map Creator";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // menuStrip1
             // 
             menuStrip1.BackColor = Color.FromArgb(50, 50, 50);
@@ -156,7 +189,7 @@
             newToolStripMenuItem.BackColor = Color.FromArgb(50, 50, 50);
             newToolStripMenuItem.ForeColor = Color.White;
             newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(103, 22);
+            newToolStripMenuItem.Size = new Size(180, 22);
             newToolStripMenuItem.Text = "New";
             // 
             // openToolStripMenuItem
@@ -164,45 +197,47 @@
             openToolStripMenuItem.BackColor = Color.FromArgb(50, 50, 50);
             openToolStripMenuItem.ForeColor = Color.White;
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(103, 22);
+            openToolStripMenuItem.Size = new Size(180, 22);
             openToolStripMenuItem.Text = "Open";
+            openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.BackColor = Color.FromArgb(50, 50, 50);
             saveToolStripMenuItem.ForeColor = Color.White;
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(103, 22);
+            saveToolStripMenuItem.Size = new Size(180, 22);
             saveToolStripMenuItem.Text = "Save";
+            saveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem1
             // 
             exitToolStripMenuItem1.BackColor = Color.FromArgb(50, 50, 50);
             exitToolStripMenuItem1.ForeColor = Color.White;
             exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            exitToolStripMenuItem1.Size = new Size(103, 22);
+            exitToolStripMenuItem1.Size = new Size(180, 22);
             exitToolStripMenuItem1.Text = "Exit";
             exitToolStripMenuItem1.Click += ExitToolStripMenuItem1_Click;
             // 
-            // tableLayoutPanel1
+            // TableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Controls.Add(AmountSearch, 1, 1);
-            tableLayoutPanel1.Controls.Add(Clear, 1, 0);
-            tableLayoutPanel1.Controls.Add(Generate, 0, 0);
-            tableLayoutPanel1.Controls.Add(Density, 1, 2);
-            tableLayoutPanel1.Controls.Add(Multiplier, 0, 2);
-            tableLayoutPanel1.Location = new Point(12, 59);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 288F));
-            tableLayoutPanel1.Size = new Size(164, 388);
-            tableLayoutPanel1.TabIndex = 4;
+            TableLayoutPanel1.ColumnCount = 2;
+            TableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            TableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            TableLayoutPanel1.Controls.Add(AmountSearch, 1, 1);
+            TableLayoutPanel1.Controls.Add(Clear, 1, 0);
+            TableLayoutPanel1.Controls.Add(Generate, 0, 0);
+            TableLayoutPanel1.Controls.Add(Density, 1, 2);
+            TableLayoutPanel1.Controls.Add(Multiplier, 0, 2);
+            TableLayoutPanel1.Location = new Point(12, 59);
+            TableLayoutPanel1.Name = "TableLayoutPanel1";
+            TableLayoutPanel1.RowCount = 4;
+            TableLayoutPanel1.RowStyles.Add(new RowStyle());
+            TableLayoutPanel1.RowStyles.Add(new RowStyle());
+            TableLayoutPanel1.RowStyles.Add(new RowStyle());
+            TableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 288F));
+            TableLayoutPanel1.Size = new Size(164, 388);
+            TableLayoutPanel1.TabIndex = 4;
             // 
             // AmountSearch
             // 
@@ -280,9 +315,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(784, 461);
-            Controls.Add(tableLayoutPanel1);
             Controls.Add(menuStrip1);
             Controls.Add(panel2);
+            Controls.Add(TableLayoutPanel1);
             Controls.Add(Draw);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.None;
@@ -292,10 +327,11 @@
             Text = "Map Creator";
             Load += Form1_Load;
             panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            TableLayoutPanel1.ResumeLayout(false);
+            TableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -310,15 +346,17 @@
         private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem saveToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem1;
-        private Label label1;
         private new Label Close;
         private Label ChangeSize;
         private Label Minimize;
-        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel TableLayoutPanel1;
         private Button Generate;
         private Button Clear;
         private TextBox Multiplier;
         private TextBox AmountSearch;
         private TextBox Density;
+        private Label label1;
+        private PictureBox pictureBox1;
+        private Label mapNameTextBox;
     }
 }
